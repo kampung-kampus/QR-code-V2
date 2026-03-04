@@ -1,0 +1,13 @@
+{
+  "plotNumber": 1,
+  "plantName": "Acerola Cherry",
+  "datePlanted": "2026-02-01",
+  "expectedHarvest": "2026-03-15",
+  "lastManure": "2026-02-20",
+  "lastWeeded": "2026-02-25",
+  "nextManure": "2026-03-10",
+  "lastScan": "2026-03-02",
+  "uses": "Rich in vitamins, used in salads.",
+  "funFacts": "Acerola cherry is often called the king of Vitamin C since each cherry contains about 200mg of the vitamin!",
+  "images": ["Images/acerola.jpg"]
+}
