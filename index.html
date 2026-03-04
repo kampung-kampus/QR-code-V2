@@ -77,30 +77,39 @@
       document.getElementById("plotData").innerHTML = "No plot specified in URL.";
     }
 
-    function renderData(role) {
-      if (!plotData) return;
-      let html = `
-        <div class="section"><strong>Plot Number:</strong> ${plotData.plotNumber}</div>
-        <div class="section"><strong>Plant Name:</strong> ${plotData.plantName}</div>
-        <div class="section"><strong>Date Planted:</strong> ${plotData.datePlanted}</div>
-        <div class="section"><strong>Expected Harvest:</strong> ${plotData.expectedHarvest}</div>
-        <div class="section"><strong>Uses:</strong> ${plotData.uses}</div>
-        <div class="section"><strong>Fun Facts:</strong> ${plotData.funFacts}</div>
-        <div class="section images">
-          <strong>Plant Images:</strong><br>
-          ${plotData.images.map(img => `<img src="${img}" alt="${plotData.plantName}">`).join("")}
-        </div>
-      `;
-      if (role === "staff") {
-        html += `
-          <div class="section"><strong>Last Manure:</strong> ${plotData.lastManure}</div>
-          <div class="section"><strong>Next Manure:</strong> ${plotData.nextManure}</div>
-          <div class="section"><strong>Last Weeded:</strong> ${plotData.lastWeeded}</div>
-          <div class="section"><strong>Last Scan:</strong> ${plotData.lastScan}</div>
-        `;
-      }
-      document.getElementById("plotData").innerHTML = html;
-    }
+function renderData(role) {
+  if (!plotData) return;
+  let html = `
+    <div class="section"><strong>Plot Number:</strong> ${plotData.plotNumber}</div>
+    <div class="section"><strong>Plant Name:</strong> ${plotData.plantName}</div>
+    <div class="section"><strong>Date Planted:</strong> ${plotData.datePlanted}</div>
+    <div class="section"><strong>Expected Harvest:</strong> ${plotData.expectedHarvest}</div>
+    <div class="section"><strong>Uses:</strong> ${plotData.uses}</div>
+    <div class="section"><strong>Fun Facts:</strong> ${plotData.funFacts}</div>
+  `;
+
+  if (role === "staff") {
+    html += `
+      <div class="staff-info">
+        <h2>Staff Information</h2>
+        <div class="section"><strong>Last Manure:</strong> ${plotData.lastManure}</div>
+        <div class="section"><strong>Next Manure:</strong> ${plotData.nextManure}</div>
+        <div class="section"><strong>Last Weeded:</strong> ${plotData.lastWeeded}</div>
+        <div class="section"><strong>Last Scan:</strong> ${plotData.lastScan}</div>
+      </div>
+    `;
+  }
+
+  html += `
+    <div class="section images">
+      <strong>Plant Images:</strong><br>
+      ${plotData.images.map(img => `<img src="${img}" alt="${plotData.plantName}">`).join("")}
+    </div>
+  `;
+
+  document.getElementById("plotData").innerHTML = html;
+}
+
 
     function showVisitor() { renderData("visitor"); }
     function showStaff() { renderData("staff"); }
