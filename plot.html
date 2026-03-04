@@ -1,1 +1,7 @@
-
+fetch(`plot/plot${plotNumber}.json`)
+  .then(response => response.json())
+  .then(data => { plotData = data; showVisitor(); })
+  .catch(err => {
+    document.getElementById("plotData").innerHTML = "Error loading plot data.";
+    console.error(err);
+  });
