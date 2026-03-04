@@ -110,9 +110,18 @@ function renderData(role) {
   document.getElementById("plotData").innerHTML = html;
 }
 
+function showVisitor() { 
+  renderData("visitor"); 
+}
 
-    function showVisitor() { renderData("visitor"); }
-    function showStaff() { renderData("staff"); }
+function showStaff() { 
+  renderData("staff"); 
+  // Smoothly scroll to the images section
+  const imagesSection = document.querySelector(".images");
+  if (imagesSection) {
+    imagesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
   </script>
 </body>
 </html>
