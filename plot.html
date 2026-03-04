@@ -1,7 +1,72 @@
-fetch(`plot/plot${plotNumber}.json`)
-  .then(response => response.json())
-  .then(data => { plotData = data; showVisitor(); })
-  .catch(err => {
-    document.getElementById("plotData").innerHTML = "Error loading plot data.";
-    console.error(err);
-  });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farm Plot Info</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+    h1 { color: #2c3e50; }
+    .images img { max-width: 200px; margin: 10px; border: 2px solid #ccc; border-radius: 5px; }
+    .section { margin-bottom: 15px; }
+    .buttons { margin-bottom: 20px; }
+    button { margin-right: 10px; padding: 8px 12px; }
+  </style>
+</head>
+<body>
+  <h1>Plot Information</h1>
+  <div class="buttons">
+    <button onclick="showVisitor()">Visitor View</button>
+    <button onclick="showStaff()">Staff View</button>
+  </div>
+  <div id="plotData">Loading...</div>
+
+  <script>
+    // Get plot number from URL (e.g., plot.html?plot=1)
+    const urlParams = new URLSearchParams(window.location.search);
+    const plotNumber = urlParams.get("plot");
+
+    let plotData = null;
+
+    // Load JSON data for the plot
+    if (plotNumber) {
+      fetch(`plot/plot${plotNumber}.json`)
+        .then(response => response.json())
+        .then(data => { plotData = data; showVisitor(); })
+        .catch(err => {
+          document.getElementById("plotData").innerHTML = "Error loading plot data.";
+          console.error(err);
+        });
+    } else {
+      document.getElementById("plotData").innerHTML = "No plot specified in URL.";
+    }
+
+    function renderData(role) {
+      if (!plotData) return;
+      let html = `
+        <div class="section"><strong>Plot Number:</strong> ${plotData.plotNumber}</div>
+        <div class="section"><strong>Plant Name:</strong> ${plotData.plantName}</div>
+        <div class="section"><strong>Date Planted:</strong> ${plotData.datePlanted}</div>
+        <div class="section"><strong>Expected Harvest:</strong> ${plotData.expectedHarvest}</div>
+        <div class="section"><strong>Uses:</strong> ${plotData.uses}</div>
+        <div class="section"><strong>Fun Facts:</strong> ${plotData.funFacts}</div>
+        <div class="section images">
+          <strong>Plant Images:</strong><br>
+          ${plotData.images.map(img => `<img src="${img}" alt="${plotData.plantName}">`).join("")}
+        </div>
+      `;
+      if (role === "staff") {
+        html += `
+          <div class="section"><strong>Last Manure:</strong> ${plotData.lastManure}</div>
+          <div class="section"><strong>Next Manure:</strong> ${plotData.nextManure}</div>
+          <div class="section"><strong>Last Weeded:</strong> ${plotData.lastWeeded}</div>
+          <div class="section"><strong>Last Scan:</strong> ${plotData.lastScan}</div>
+        `;
+      }
+      document.getElementById("plotData").innerHTML = html;
+    }
+
+    function showVisitor() { renderData("visitor"); }
+    function showStaff() { renderData("staff"); }
+  </script>
+</body>
+</html>
