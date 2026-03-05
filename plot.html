@@ -3,14 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <title>Farm Plot Info</title>
-  <link rel="stylesheet" href="styles.css">
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
     h1 { color: #2c3e50; }
-    .images img { max-width: 200px; margin: 10px; border: 2px solid #ccc; border-radius: 5px; }
     .section { margin-bottom: 15px; }
     .buttons { margin-bottom: 20px; }
     button { margin-right: 10px; padding: 8px 12px; }
+
+    /* Gallery layout */
+    .images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .images img {
+      width: 100%;
+      height: auto;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .images img:hover {
+      transform: scale(1.05);
+      border-color: #2c3e50;
+    }
+
+    /* Highlighted staff info box */
+    .staff-info {
+      background-color: #f0f8ff; /* light blue background */
+      border: 2px solid #2c3e50; /* dark border for contrast */
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .staff-info h2 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
   </style>
 </head>
 <body>
@@ -30,7 +65,7 @@
 
     // Load JSON data for the plot
     if (plotNumber) {
-      fetch(`plot/plot${plotNumber}.json`)
+      fetch(`plots/plot${plotNumber}.json`)
         .then(response => response.json())
         .then(data => { plotData = data; showVisitor(); })
         .catch(err => {
@@ -41,42 +76,52 @@
       document.getElementById("plotData").innerHTML = "No plot specified in URL.";
     }
 
-     
-        function renderData(role) {
-  if (!plotData) return;
-  let html = `
-    <div class="section"><strong>Plot Number:</strong> ${plotData.plotNumber}</div>
-    <div class="section"><strong>Plant Name:</strong> ${plotData.plantName}</div>
-    <div class="section"><strong>Date Planted:</strong> ${plotData.datePlanted}</div>
-    <div class="section"><strong>Expected Harvest:</strong> ${plotData.expectedHarvest}</div>
-    <div class="section"><strong>Uses:</strong> ${plotData.uses}</div>
-    <div class="section"><strong>Fun Facts:</strong> ${plotData.funFacts}</div>
-  `;
+    function renderData(role) {
+      if (!plotData) return;
+      let html = `
+        <div class="section"><strong>Plot Number:</strong> ${plotData.plotNumber}</div>
+        <div class="section"><strong>Plant Name:</strong> ${plotData.plantName}</div>
+        <div class="section"><strong>Date Planted:</strong> ${plotData.datePlanted}</div>
+        <div class="section"><strong>Expected Harvest:</strong> ${plotData.expectedHarvest}</div>
+        <div class="section"><strong>Uses:</strong> ${plotData.uses}</div>
+        <div class="section"><strong>Fun Facts:</strong> ${plotData.funFacts}</div>
+      `;
 
-  if (role === "staff") {
-    html += `
-      <div class="staff-info">
-        <h2>Staff Information</h2>
-        <div class="section"><strong>Last Manure:</strong> ${plotData.lastManure}</div>
-        <div class="section"><strong>Next Manure:</strong> ${plotData.nextManure}</div>
-        <div class="section"><strong>Last Weeded:</strong> ${plotData.lastWeeded}</div>
-        <div class="section"><strong>Last Scan:</strong> ${plotData.lastScan}</div>
-      </div>
-    `;
-  }
+      if (role === "staff") {
+        html += `
+          <div class="staff-info">
+            <h2>Staff Information</h2>
+            <div class="section"><strong>Last Manure:</strong> ${plotData.lastManure}</div>
+            <div class="section"><strong>Next Manure:</strong> ${plotData.nextManure}</div>
+            <div class="section"><strong>Last Weeded:</strong> ${plotData.lastWeeded}</div>
+            <div class="section"><strong>Last Scan:</strong> ${plotData.lastScan}</div>
+          </div>
+        `;
+      }
 
-  html += `
-    <div class="section images">
-      <strong>Plant Images:</strong><br>
-      ${plotData.images.map(img => `<img src="${img}" alt="${plotData.plantName}">`).join("")}
-    </div>
-  `;
+      html += `
+        <div class="section images">
+          <strong>Plant Images:</strong><br>
+          ${plotData.images.map(img => `<img src="${img}" alt="${plotData.plantName}">`).join("")}
+        </div>
+      `;
 
-  document.getElementById("plotData").innerHTML = html;
-}
+      document.getElementById("plotData").innerHTML = html;
+    }
 
-    function showVisitor() { renderData("visitor"); }
-    function showStaff() { renderData("staff"); }
+    function showVisitor() { 
+      renderData("visitor"); 
+    }
+
+    function showStaff() { 
+      renderData("staff"); 
+      // Smoothly scroll to the images section
+      const imagesSection = document.querySelector(".images");
+      if (imagesSection) {
+        imagesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
   </script>
 </body>
-</html>
+</html> 
+ 
