@@ -50,60 +50,14 @@
   
 </head>
 <body>
-  <h1>Plot Information</h1>
-  <div class="buttons">
-    <button onclick="showVisitor()">Visitor View</button>
-    <button onclick="showStaff()">Staff View</button>
-  </div>
-  <div id="plotData">Loading...</div>
-
-  <script>
-    // Get plot number from URL (e.g., plot.html?plot=1)
-    const urlParams = new URLSearchParams(window.location.search);
-    const plotNumber = urlParams.get("plot");
-
-    let plotData = null;
-
-    // Load JSON data for the plot from /plots folder
-    if (plotNumber) {
-      fetch(`plots/plot${plotNumber}.json`)
-        .then(response => response.json())
-        .then(data => { plotData = data; showVisitor(); })
-        .catch(err => {
-          document.getElementById("plotData").innerHTML = "Error loading plot data.";
-          console.error(err);
-        });
-    } else {
-      document.getElementById("plotData").innerHTML = "No plot specified in URL.";
-    }
-
+ <h1>Farm Plot Information</h1>
+  <p>Select a plot to view details:</p>
+  <div class="links">
+    <a href="plot.html?plot=1">Plot 1</a>
+    <a href="plot.html?plot=2">Plot 2</a>
+    <a href="plot.html?plot=3">Plot 3</a>
+    <!-- Add more plots as needed -->
+  </div>  
  
- <a href="plot.html?plot=1">Plot 1</a>
-<a href="plot.html?plot=2">Plot 2</a><a href="plot.html?plot=1">Plot 1</a>
-<a href="plot.html?plot=2">Plot 2</a>
-    
-  html += `
-    <div class="section images">
-      <strong>Plant Images:</strong><br>
-      ${plotData.images.map(img => `<img src="${img}" alt="${plotData.plantName}">`).join("")}
-    </div>
-  `;
-
-  document.getElementById("plotData").innerHTML = html;
-}
-
-function showVisitor() { 
-  renderData("visitor"); 
-}
-
-function showStaff() { 
-  renderData("staff"); 
-  // Smoothly scroll to the images section
-  const imagesSection = document.querySelector(".images");
-  if (imagesSection) {
-    imagesSection.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
-  </script>
 </body>
 </html>
