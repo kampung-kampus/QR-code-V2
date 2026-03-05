@@ -67,7 +67,7 @@
 
     // Load JSON data for the plot
     if (plotNumber) {
-      fetch(`plots/plot${plotNumber}.json`)
+      fetch(`plot/plot${plotNumber}.json`)
         .then(response => response.json())
         .then(data => { plotData = data; showVisitor(); })
         .catch(err => {
