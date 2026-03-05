@@ -115,14 +115,22 @@
       renderData("visitor"); 
     }
 
-    function showStaff() { 
-      renderData("staff"); 
-      // Smoothly scroll to the images section
-      const imagesSection = document.querySelector(".images");
-      if (imagesSection) {
-        imagesSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+    function showStaff() {
+  // Ask for password
+  const password = prompt("Password Required");
+
+  // Check password (you can change "secret123" to whatever you want)
+  if (password === "secret123") {
+    renderData("staff");
+    // Smoothly scroll to the images section
+    const imagesSection = document.querySelector(".images");
+    if (imagesSection) {
+      imagesSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+  } else if (password !== null) {
+    alert("Incorrect password. Access denied.");
+  }
+}
   </script>
 </body>
 </html> 
