@@ -120,11 +120,16 @@
   const password = prompt("Password Required");
 
   if (password !== null) {
-    // Convert input to lowercase for comparison
-     // Check password (you can change "GUI" to whatever you want)
+    // Normalize input to lowercase for comparison
+    const entered = password.toLowerCase();
 
-    if (password.toLowerCase() === "GUI") {
+    // Define valid passwords (you can add more if needed)
+    const validPasswords = ["gui"];
+
+    if (validPasswords.includes(entered)) {
+      // Render staff view
       renderData("staff");
+
       // Smoothly scroll to the images section
       const imagesSection = document.querySelector(".images");
       if (imagesSection) {
