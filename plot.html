@@ -115,29 +115,28 @@
       renderData("visitor"); 
     }
 
-   function showStaff() {
-  // Ask for password
-  const password = prompt("Password Required");
+  function showStaff() {
+  // Get the value from the password input field
+  const passwordField = document.getElementById("staffPassword");
+  const entered = passwordField.value.toLowerCase();
 
-  if (password !== null) {
-    // Normalize input to lowercase for comparison
-    const entered = password.toLowerCase();
+  // Define valid passwords (expandable list)
+  const validPasswords = ["gui"];
 
-    // Define valid passwords (you can add more if needed)
-    const validPasswords = ["gui"];
+  if (validPasswords.includes(entered)) {
+    // Render staff view
+    renderData("staff");
 
-    if (validPasswords.includes(entered)) {
-      // Render staff view
-      renderData("staff");
-
-      // Smoothly scroll to the images section
-      const imagesSection = document.querySelector(".images");
-      if (imagesSection) {
-        imagesSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    } else {
-      alert("Incorrect password. Access denied.");
+    // Smoothly scroll to the images section
+    const imagesSection = document.querySelector(".images");
+    if (imagesSection) {
+      imagesSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+
+    // Hide the login box after successful login (optional)
+    document.getElementById("staff-login").style.display = "none";
+  } else {
+    alert("Incorrect password. Access denied.");
   }
 }
   </script>
