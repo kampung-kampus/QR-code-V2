@@ -81,6 +81,7 @@
     function renderData(role) {
       if (!plotData) return;
       let html = `
+       <div class="section"><strong>Staff Name:</strong> ${plotData.staffName}</div>
         <div class="section"><strong>Plot Number:</strong> ${plotData.plotNumber}</div>
         <div class="section"><strong>Plant Name:</strong> ${plotData.plantName}</div>
         <div class="section"><strong>Date Planted:</strong> ${plotData.datePlanted}</div>
@@ -96,7 +97,7 @@
             <div class="section"><strong>Last Manure:</strong> ${plotData.lastManure}</div>
             <div class="section"><strong>Next Manure:</strong> ${plotData.nextManure}</div>
             <div class="section"><strong>Last Weeded:</strong> ${plotData.lastWeeded}</div>
-            <div class="section"><strong>Last Scan:</strong> ${plotData.lastScan}</div>
+            
           </div>
         `;
       }
