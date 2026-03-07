@@ -102,12 +102,12 @@
         `;
       }
 
-      html += `
-        <div class="section images">
-          <strong>Plant Images:</strong><br>
-          ${plotData.images.map(img => `<img src="${img}" alt="${plotData.plantName}">`).join("")}
-        </div>
-      `;
+    html += `
+  <div class="section images">
+    <strong>Plant Images:</strong><br>
+    ${plotData.images ? plotData.images.map(img => `<img src="${img}" alt="${plotData.plantName}">`).join("") : ""}
+  </div>
+`;
 
       document.getElementById("plotData").innerHTML = html;
     }
